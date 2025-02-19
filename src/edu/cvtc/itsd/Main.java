@@ -8,6 +8,8 @@ import java.sql.*;
 import java.util.TimerTask;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.DocumentEvent;//added
+import javax.swing.event.DocumentListener;//added
 import javax.swing.text.*;
 
 // CiCo application's primary class ///////////////////////////////////////////
@@ -41,7 +43,14 @@ public class Main {
     public void insertString(FilterBypass fb, int offset, String stringToAdd, AttributeSet attr)
         throws BadLocationException
     {
-      if (fb.getDocument() != null) {
+      if (stringToAdd == null) { // Added code
+        return;
+      }
+
+      String currentText = fb.getDocument().getText(0, fb.getDocument().getLength());
+      String newText = currentText.substring(0, offset) + stringToAdd + currentText.substring(offset);
+
+      if (newText.length() <= MAX_LENGTH && newText.matches("\\d*")){//"(fb.getDocument() != null) {" = old code
         super.insertString(fb, offset, stringToAdd, attr);
       }
       else {
@@ -53,7 +62,14 @@ public class Main {
     public void replace(FilterBypass fb, int offset, int lengthToDelete, String stringToAdd, AttributeSet attr)
         throws BadLocationException
     {
-      if (fb.getDocument() != null) {
+      if (stringToAdd == null) { // Added code
+        return;
+      }
+
+      String currentText = fb.getDocument().getText(0, fb.getDocument().getLength());
+      String newText = currentText.substring(0, offset) + stringToAdd + currentText.substring(offset + lengthToDelete);
+
+      if (newText.length() <= MAX_LENGTH && newText.matches("\\d*")){ //"(fb.getDocument() != null) {" = old code
         super.replace(fb, offset, lengthToDelete, stringToAdd, attr);
       }
       else {
@@ -62,6 +78,34 @@ public class Main {
     }
   }
 
+  private static class CardNumberListener implements DocumentListener { //added code
+    @Override
+    public void insertUpdate(DocumentEvent e) {
+        checkLength(e);
+    }
+
+    @Override
+    public void removeUpdate(DocumentEvent e) {
+        // No action needed on remove
+    }
+
+    @Override
+    public void changedUpdate(DocumentEvent e) {
+        // No action needed on change
+    }
+
+    private void checkLength(DocumentEvent e) {
+      try {
+        String text = e.getDocument().getText(0, e.getDocument().getLength());
+        if (text.length() == InputFilter.MAX_LENGTH) {
+        Main.processCard(); // Call the method to process the card
+        }
+      } catch (BadLocationException ex) {
+        ex.printStackTrace();
+      }
+    }
+  }
+  
   // Lookup the card information after button press ///////////////////////////
   public static class Update implements ActionListener {
     public void actionPerformed(ActionEvent evt) {
@@ -253,6 +297,9 @@ public class Main {
     fieldNumber = new JTextField();
     InputFilter filter = new InputFilter();
     ((AbstractDocument)(fieldNumber.getDocument())).setDocumentFilter(filter);
+    
+    fieldNumber.getDocument().addDocumentListener(new CardNumberListener());// added code
+    
     fieldNumber.setPreferredSize(new Dimension(200, 32));
     fieldNumber.setMaximumSize(new Dimension(200, 32));
     fieldNumber.setAlignmentX(JComponent.CENTER_ALIGNMENT);

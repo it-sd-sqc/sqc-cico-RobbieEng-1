@@ -61,4 +61,11 @@ Use `./build.sh` to build CiCo and `./run.sh` to run it if using the command lin
 ## Expected results
 * Should display "Developer" for the user name.
 
+# Module 4: the field should ignore all non-numerical input.
 
+## Test steps
+1. Build and run CiCo.
+2. Enter "asdfgh;'[]/" into the field.
+
+## Expected results
+* the letters should not show up on the field. [only numbers]
