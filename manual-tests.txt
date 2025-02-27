@@ -69,3 +69,13 @@ Use `./build.sh` to build CiCo and `./run.sh` to run it if using the command lin
 
 ## Expected results
 * the letters should not show up on the field. [only numbers]
+
+## Module 5 ticket 501
+
+## Test steps
+1. Build and run CiCo.
+2. Enter 00000000
+
+## Expected results
+* Checked in status and sign-in button to scan new card 
+* or wait for timer to switch back.
