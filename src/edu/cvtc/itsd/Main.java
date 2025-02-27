@@ -150,6 +150,7 @@ public class Main {
   static JLabel labelUser;
   static JLabel labelState;
   static JButton buttonAcknowledge;
+  
 
   // Timer variables //////////////////////////////////////////////////////////
   static java.util.Timer timer;
@@ -227,7 +228,7 @@ public class Main {
     };
 
     labelReason.setText(explanations[code]);
-    scheduleTransitionFrom(CARD_ERROR, buttonAcknowledge);
+    scheduleTransitionFrom(CARD_ERROR,buttonAcknowledge);
   }
 
   // Create an idle timer and display the target card /////////////////////////
@@ -251,6 +252,13 @@ public class Main {
     ((CardLayout)deck.getLayout()).show(deck, CARD_MAIN);
     fieldNumber.grabFocus();
   }
+  
+  public static class NewFeatureHandler implements ActionListener {
+    public void actionPerformed(ActionEvent evt) {
+        // Implement the action for the new feature here
+        JOptionPane.showMessageDialog(deck, "you are logged out");
+    }
+}
 
   // Display name and new status //////////////////////////////////////////////
   // Module 3 tickets: Display user name and new status. Doesn't require a
@@ -259,7 +267,7 @@ public class Main {
     labelUser.setText(name);
     labelState.setText(isCheckedInNow ? "Checked IN" : "Checked OUT");
   }
-
+  
   // Entry point //////////////////////////////////////////////////////////////
   // Our GUI code is very similar; however, we want to keep it explicit.
   @SuppressWarnings("DuplicatedCode")
@@ -297,9 +305,7 @@ public class Main {
     fieldNumber = new JTextField();
     InputFilter filter = new InputFilter();
     ((AbstractDocument)(fieldNumber.getDocument())).setDocumentFilter(filter);
-    
-    fieldNumber.getDocument().addDocumentListener(new CardNumberListener());// added code
-    
+      fieldNumber.getDocument().addDocumentListener(new CardNumberListener());// added code
     fieldNumber.setPreferredSize(new Dimension(200, 32));
     fieldNumber.setMaximumSize(new Dimension(200, 32));
     fieldNumber.setAlignmentX(JComponent.CENTER_ALIGNMENT);
@@ -307,13 +313,13 @@ public class Main {
     fieldNumber.setForeground(Color.magenta);
     panelMain.add(fieldNumber);
 
-    JButton updateButton = new JButton("Update");
-    updateButton.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-    updateButton.addActionListener(new Update());
-    updateButton.setForeground(Color.green);
-    panelMain.add(updateButton);
+    //JButton updateButton = new JButton("Update");
+    //updateButton.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+    //updateButton.addActionListener(new Update());
+    //updateButton.setForeground(Color.green);
+    //panelMain.add(updateButton);
 
-    panelMain.add(Box.createVerticalGlue());
+    //panelMain.add(Box.createVerticalGlue());
 
     // Status panel ///////////////////////////////////////////////////////////
     JPanel panelStatus = new JPanel();
@@ -335,15 +341,15 @@ public class Main {
     labelState.setAlignmentX(JComponent.CENTER_ALIGNMENT);
     labelState.setForeground(Color.magenta);
     panelStatus.add(labelState);
-
+    
     panelStatus.add(Box.createVerticalGlue());
 
     // Error panel ////////////////////////////////////////////////////////////
     JPanel panelError = new JPanel();
     panelError.setLayout(new BoxLayout(panelError, BoxLayout.PAGE_AXIS));
-    panelError.setMinimumSize(new Dimension(320, 240));
-    panelError.setPreferredSize(new Dimension(640, 480));
-    panelError.setMaximumSize(new Dimension(640, 480));
+    panelError.setMinimumSize(new Dimension(20, 40));
+    panelError.setPreferredSize(new Dimension(40, 80));
+    panelError.setMaximumSize(new Dimension(40, 80));
     panelError.setBackground(Color.red);
 
     panelError.add(Box.createVerticalGlue());
