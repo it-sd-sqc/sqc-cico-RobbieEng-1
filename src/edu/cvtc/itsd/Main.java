@@ -150,6 +150,7 @@ public class Main {
   static JLabel labelUser;
   static JLabel labelState;
   static JButton buttonAcknowledge;
+  static JButton signInButton;//add sign-in button
 
   // Timer variables //////////////////////////////////////////////////////////
   static java.util.Timer timer;
@@ -194,7 +195,7 @@ public class Main {
         }
 
         updateStateLabels(name, currentState == 1);
-        scheduleTransitionFrom(CARD_STATE, null);
+        scheduleTransitionFrom(CARD_STATE,signInButton);//add sign-in button
       }
       else {
         showError(ERROR_NOT_FOUND);
@@ -338,6 +339,14 @@ public class Main {
 
     panelStatus.add(Box.createVerticalGlue());
 
+    //add sign-in button
+    signInButton = new JButton("Next Sign-in");
+    signInButton.addActionListener(handler);
+    signInButton.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+    signInButton.setForeground(Color.blue);
+    panelStatus.add(signInButton);
+    panelStatus.add(Box.createVerticalGlue());
+    
     // Error panel ////////////////////////////////////////////////////////////
     JPanel panelError = new JPanel();
     panelError.setLayout(new BoxLayout(panelError, BoxLayout.PAGE_AXIS));
