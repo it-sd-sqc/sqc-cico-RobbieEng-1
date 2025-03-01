@@ -52,13 +52,11 @@ Use `./build.sh` to build CiCo and `./run.sh` to run it if using the command lin
 * Should display "Checked IN" after step 2.
 * Should display "Checked OUT" after step 4.
 
-# Module 3: Match between system and the real world
+# Module 6: Tickets 601, automatically accept input without the need to press the update button
 
 ## Test steps
 1. Build and run CiCo.
-2. Enter 00000000 into the field and click Update.
+2. Enter 00000000 into the field.
 
 ## Expected results
-* Should display "Developer" for the user name.
-
-
+* The program automatically moves to the status screen and update the users status.
