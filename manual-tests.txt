@@ -59,4 +59,4 @@ Use `./build.sh` to build CiCo and `./run.sh` to run it if using the command lin
 2. Enter 00000000 into the field.
 
 ## Expected results
-* The program automatically moves to the status screen and update the users status.
+* The program automatically moves to the status screen and update the user's status.
