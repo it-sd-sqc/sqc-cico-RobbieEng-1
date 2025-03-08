@@ -52,7 +52,37 @@ Use `./build.sh` to build CiCo and `./run.sh` to run it if using the command lin
 * Should display "Checked IN" after step 2.
 * Should display "Checked OUT" after step 4.
 
-# Module 6: Tickets 601, automatically accept input without the need to press the update button
+# Module 4: the field should ignore all non-numerical input.
+
+## Test steps
+1. Build and run CiCo.
+2. Enter "asdfgh;'[]/" into the field.
+
+## Expected results
+* the letters should not show up on the field. [only numbers]
+
+## Module 5 ticket 501
+
+## Test steps
+1. Build and run CiCo.
+2. Enter 00000000
+
+## Expected results
+* Checked in status and sign-in button to scan new card 
+* or wait for timer to switch back.
+
+## Module 6 ticket 601
+
+## Test steps
+1. Build and run CiCo.
+2. Enter 00000000
+
+## Expected results
+* when you run CiCo note no button for number
+* Checked in status and sign-in button to scan new card 
+* or wait for timer to switch back.
+
+# bhager merge - Module 6: Tickets 601, automatically accept input without the need to press the update button
 
 ## Test steps
 1. Build and run CiCo.

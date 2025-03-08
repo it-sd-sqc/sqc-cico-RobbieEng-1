@@ -9,6 +9,8 @@ import java.util.TimerTask;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.DocumentEvent;//added
+import javax.swing.event.DocumentListener;//added
 import javax.swing.text.*;
 
 // CiCo application's primary class ///////////////////////////////////////////
@@ -42,7 +44,14 @@ public class Main {
     public void insertString(FilterBypass fb, int offset, String stringToAdd, AttributeSet attr)
         throws BadLocationException
     {
-      if (fb.getDocument() != null) {
+      if (stringToAdd == null) { // Added code
+        return;
+      }
+
+      String currentText = fb.getDocument().getText(0, fb.getDocument().getLength());
+      String newText = currentText.substring(0, offset) + stringToAdd + currentText.substring(offset);
+
+      if (newText.length() <= MAX_LENGTH && newText.matches("\\d*")){//"(fb.getDocument() != null) {" = old code
         super.insertString(fb, offset, stringToAdd, attr);
       }
       else {
@@ -54,6 +63,7 @@ public class Main {
     public void replace(FilterBypass fb, int offset, int lengthToDelete, String stringToAdd, AttributeSet attr)
         throws BadLocationException
     {
+
       int length = fb.getDocument().getLength();
       int newLength = length;
 
@@ -61,14 +71,14 @@ public class Main {
         newLength += stringToAdd.length();
       }
 
-      if (newLength <= MAX_LENGTH && stringToAdd.chars().allMatch(c -> Character.isDigit(c))) {
+      String currentText = fb.getDocument().getText(0, fb.getDocument().getLength());
+      String newText = currentText.substring(0, offset) + stringToAdd + currentText.substring(offset + lengthToDelete);
+
+      if (newText.length() <= MAX_LENGTH && newText.matches("\\d*")){ //"(fb.getDocument() != null) {" = old code
+
         super.replace(fb, offset, lengthToDelete, stringToAdd, attr);
         if (newLength == MAX_LENGTH) {
 
-          Border inner = BorderFactory.createLineBorder(Color.GREEN, 3);
-          Border outer = BorderFactory.createLineBorder(Color.BLACK, 1);
-          Border combined = BorderFactory.createCompoundBorder(inner, outer);
-          fieldNumber.setBorder(combined);
           Main.processCard();
         }
       }
@@ -81,6 +91,34 @@ public class Main {
     }
   }
 
+  private static class CardNumberListener implements DocumentListener { //added code
+    @Override
+    public void insertUpdate(DocumentEvent e) {
+        checkLength(e);
+    }
+
+    @Override
+    public void removeUpdate(DocumentEvent e) {
+        // No action needed on remove
+    }
+
+    @Override
+    public void changedUpdate(DocumentEvent e) {
+        // No action needed on change
+    }
+
+    private void checkLength(DocumentEvent e) {
+      try {
+        String text = e.getDocument().getText(0, e.getDocument().getLength());
+        if (text.length() == InputFilter.MAX_LENGTH) {
+        Main.processCard(); // Call the method to process the card
+        }
+      } catch (BadLocationException ex) {
+        ex.printStackTrace();
+      }
+    }
+  }
+  
   // Lookup the card information after button press ///////////////////////////
   public static class Update implements ActionListener {
     public void actionPerformed(ActionEvent evt) {
@@ -125,6 +163,7 @@ public class Main {
   static JLabel labelUser;
   static JLabel labelState;
   static JButton buttonAcknowledge;
+  static JButton signInButton;//add sign-in button
 
   // Timer variables //////////////////////////////////////////////////////////
   static java.util.Timer timer;
@@ -169,7 +208,7 @@ public class Main {
         }
 
         updateStateLabels(name, currentState == 1);
-        scheduleTransitionFrom(CARD_STATE, null);
+        scheduleTransitionFrom(CARD_STATE,signInButton);//add sign-in button
       }
       else {
         showError(ERROR_NOT_FOUND);
@@ -272,6 +311,9 @@ public class Main {
     fieldNumber = new JTextField();
     InputFilter filter = new InputFilter();
     ((AbstractDocument)(fieldNumber.getDocument())).setDocumentFilter(filter);
+    
+    fieldNumber.getDocument().addDocumentListener(new CardNumberListener());// added code
+    
     fieldNumber.setPreferredSize(new Dimension(200, 32));
     fieldNumber.setMaximumSize(new Dimension(200, 32));
     fieldNumber.setAlignmentX(JComponent.CENTER_ALIGNMENT);
@@ -304,6 +346,14 @@ public class Main {
 
     panelStatus.add(Box.createVerticalGlue());
 
+    //add sign-in button
+    signInButton = new JButton("Next Sign-in");
+    signInButton.addActionListener(handler);
+    signInButton.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+    signInButton.setForeground(Color.blue);
+    panelStatus.add(signInButton);
+    panelStatus.add(Box.createVerticalGlue());
+    
     // Error panel ////////////////////////////////////////////////////////////
     JPanel panelError = new JPanel();
     panelError.setLayout(new BoxLayout(panelError, BoxLayout.PAGE_AXIS));
