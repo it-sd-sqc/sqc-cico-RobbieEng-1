@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.sql.*;
 import java.util.TimerTask;
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;//added
 import javax.swing.event.DocumentListener;//added
@@ -62,18 +63,30 @@ public class Main {
     public void replace(FilterBypass fb, int offset, int lengthToDelete, String stringToAdd, AttributeSet attr)
         throws BadLocationException
     {
-      if (stringToAdd == null) { // Added code
-        return;
+
+      int length = fb.getDocument().getLength();
+      int newLength = length;
+
+      if (stringToAdd != null) {
+        newLength += stringToAdd.length();
       }
 
       String currentText = fb.getDocument().getText(0, fb.getDocument().getLength());
       String newText = currentText.substring(0, offset) + stringToAdd + currentText.substring(offset + lengthToDelete);
 
       if (newText.length() <= MAX_LENGTH && newText.matches("\\d*")){ //"(fb.getDocument() != null) {" = old code
+
         super.replace(fb, offset, lengthToDelete, stringToAdd, attr);
+        if (newLength == MAX_LENGTH) {
+
+          Main.processCard();
+        }
       }
       else {
         Toolkit.getDefaultToolkit().beep();
+        fieldNumber.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+
+        new Timer(1500, e -> fieldNumber.setBorder(BorderFactory.createEmptyBorder())).start();
       }
     }
   }
@@ -307,13 +320,6 @@ public class Main {
     fieldNumber.setBackground(Color.green);
     fieldNumber.setForeground(Color.magenta);
     panelMain.add(fieldNumber);
-
-    //modual 6
-    //JButton updateButton = new JButton("Update");
-    //updateButton.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-    //updateButton.addActionListener(new Update());
-    //updateButton.setForeground(Color.green);
-    //panelMain.add(updateButton);
 
     panelMain.add(Box.createVerticalGlue());
 
