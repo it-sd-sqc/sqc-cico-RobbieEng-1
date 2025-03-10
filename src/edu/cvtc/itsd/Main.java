@@ -64,6 +64,7 @@ public class Main {
         throws BadLocationException
     {
 
+
       int length = fb.getDocument().getLength();
       int newLength = length;
 
@@ -75,6 +76,10 @@ public class Main {
       String newText = currentText.substring(0, offset) + stringToAdd + currentText.substring(offset + lengthToDelete);
 
       if (newText.length() <= MAX_LENGTH && newText.matches("\\d*")){ //"(fb.getDocument() != null) {" = old code
+
+
+      //if (fb.getDocument() != null) {
+
 
         super.replace(fb, offset, lengthToDelete, stringToAdd, attr);
         if (newLength == MAX_LENGTH) {
@@ -320,6 +325,16 @@ public class Main {
     fieldNumber.setBackground(Color.green);
     fieldNumber.setForeground(Color.magenta);
     panelMain.add(fieldNumber);
+
+
+   
+    //JButton updateButton = new JButton("Update");
+    //updateButton.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+    //updateButton.addActionListener(new Update());
+    //updateButton.setForeground(Color.green);
+    //panelMain.add(updateButton);
+
+
 
     panelMain.add(Box.createVerticalGlue());
 
