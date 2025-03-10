@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.sql.*;
 import java.util.TimerTask;
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;//added
 import javax.swing.event.DocumentListener;//added
@@ -62,14 +63,8 @@ public class Main {
     public void replace(FilterBypass fb, int offset, int lengthToDelete, String stringToAdd, AttributeSet attr)
         throws BadLocationException
     {
-      if (stringToAdd == null) { // Added code
-        return;
-      }
+      if (fb.getDocument() != null) {
 
-      String currentText = fb.getDocument().getText(0, fb.getDocument().getLength());
-      String newText = currentText.substring(0, offset) + stringToAdd + currentText.substring(offset + lengthToDelete);
-
-      if (newText.length() <= MAX_LENGTH && newText.matches("\\d*")){ //"(fb.getDocument() != null) {" = old code
         super.replace(fb, offset, lengthToDelete, stringToAdd, attr);
       }
       else {
@@ -308,12 +303,13 @@ public class Main {
     fieldNumber.setForeground(Color.magenta);
     panelMain.add(fieldNumber);
 
-    //modual 6
-    //JButton updateButton = new JButton("Update");
-    //updateButton.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-    //updateButton.addActionListener(new Update());
-    //updateButton.setForeground(Color.green);
-    //panelMain.add(updateButton);
+   
+    JButton updateButton = new JButton("Update");
+    updateButton.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+    updateButton.addActionListener(new Update());
+    updateButton.setForeground(Color.green);
+    panelMain.add(updateButton);
+
 
     panelMain.add(Box.createVerticalGlue());
 
