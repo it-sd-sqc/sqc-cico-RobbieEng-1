@@ -90,3 +90,11 @@ Use `./build.sh` to build CiCo and `./run.sh` to run it if using the command lin
 
 ## Expected results
 * The program automatically moves to the status screen and update the user's status.
+
+## Moduel 6-8 ticket 602
+
+1. Build and run Cico.
+2. look at the color schemes in the program
+3. Make sure everything uses a monochromatic theme.
+4. verify contrast between the text and the background is good.
+5. Confirm button hover works but is subtle. 

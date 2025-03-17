@@ -89,7 +89,7 @@ public class Main {
       }
       else {
         Toolkit.getDefaultToolkit().beep();
-        fieldNumber.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+        fieldNumber.setBorder(BorderFactory.createLineBorder(Color.lightGray, 2));
 
         new Timer(1500, e -> fieldNumber.setBorder(BorderFactory.createEmptyBorder())).start();
       }
@@ -310,7 +310,7 @@ public class Main {
     JLabel labelDirective = new JLabel("Scan card", JLabel.LEADING);
     labelDirective.setFont(fontMain);
     labelDirective.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-    labelDirective.setForeground(Color.cyan);
+    labelDirective.setForeground(Color.lightGray);
     panelMain.add(labelDirective);
 
     fieldNumber = new JTextField();
@@ -322,8 +322,8 @@ public class Main {
     fieldNumber.setPreferredSize(new Dimension(200, 32));
     fieldNumber.setMaximumSize(new Dimension(200, 32));
     fieldNumber.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-    fieldNumber.setBackground(Color.green);
-    fieldNumber.setForeground(Color.magenta);
+    fieldNumber.setBackground(Color.black);
+    fieldNumber.setForeground(Color.lightGray);
     panelMain.add(fieldNumber);
 
 
@@ -344,19 +344,19 @@ public class Main {
     panelStatus.setMinimumSize(new Dimension(320, 240));
     panelStatus.setPreferredSize(new Dimension(640, 480));
     panelStatus.setMaximumSize(new Dimension(640, 480));
-    panelStatus.setBackground(Color.blue);
+    panelStatus.setBackground(Color.black);
 
     panelStatus.add(Box.createVerticalGlue());
     labelUser = new JLabel("Registrant", JLabel.LEADING);
     labelUser.setFont(fontMain);
     labelUser.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-    labelUser.setForeground(Color.yellow);
+    labelUser.setForeground(Color.lightGray);
     panelStatus.add(labelUser);
 
     labelState = new JLabel("updated", JLabel.LEADING);
     labelState.setFont(fontMain);
     labelState.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-    labelState.setForeground(Color.magenta);
+    labelState.setForeground(Color.lightGray);
     panelStatus.add(labelState);
 
     panelStatus.add(Box.createVerticalGlue());
@@ -365,7 +365,7 @@ public class Main {
     signInButton = new JButton("Next Sign-in");
     signInButton.addActionListener(handler);
     signInButton.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-    signInButton.setForeground(Color.blue);
+    signInButton.setForeground(Color.lightGray);
     panelStatus.add(signInButton);
     panelStatus.add(Box.createVerticalGlue());
     
@@ -375,19 +375,19 @@ public class Main {
     panelError.setMinimumSize(new Dimension(320, 240));
     panelError.setPreferredSize(new Dimension(640, 480));
     panelError.setMaximumSize(new Dimension(640, 480));
-    panelError.setBackground(Color.red);
+    panelError.setBackground(Color.black);
 
     panelError.add(Box.createVerticalGlue());
     labelReason = new JLabel("", JLabel.LEADING);
     labelReason.setFont(fontMain);
     labelReason.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-    labelReason.setForeground(Color.yellow);
+    labelReason.setForeground(Color.lightGray);
     panelError.add(labelReason);
 
     buttonAcknowledge = new JButton("OK");
     buttonAcknowledge.addActionListener(handler);
     buttonAcknowledge.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-    buttonAcknowledge.setForeground(Color.red);
+    buttonAcknowledge.setForeground(Color.lightGray);
     panelError.add(buttonAcknowledge);
     panelError.add(Box.createVerticalGlue());
 
@@ -443,4 +443,5 @@ public class Main {
     frame.setLocationRelativeTo(null);
     frame.setVisible(true);
   }
+
 }
